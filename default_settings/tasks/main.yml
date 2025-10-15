@@ -1,0 +1,10 @@
+- name: Установка программ
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present #Параметр действия. present - установить, absent - удалить
+  loop:
+    - "{{ packages_to_install }}"
+
+- name: Меняем имя машины
+  shell: "echo {{ inventory_hostname }} > /etc/hostname"

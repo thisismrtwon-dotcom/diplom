@@ -1,0 +1,27 @@
+#- name: Создание пользователя postgresql
+#  shell: "echo \"CREATE USER wikiuser WITH PASSWORD 'qwerty'\" | psql"
+#  vars:
+#    ansible_become: true
+#    ansible_become_user: "postgres"
+#    ansible_become_method: sudo
+
+- name: Выполнение команды через raw
+  raw: |
+    sudo -u postgres psql -c "CREATE USER wikiuser WITH PASSWORD 'qwerty';"
+  become: yes
+
+- name: Выполнение команды через raw
+  raw: |
+    sudo -u postgres psql -c "CREATE DATABASE my_wiki OWNER wikiuser;"
+  become: yes
+
+- name: Конфигурация postgresql.conf
+  lineinfile:
+    path: /etc/postgresql/14/main/postgresql.conf
+    line: "listen_addresses = '*'"
+    state: present
+
+- name: Конфигурация pg_hba.conf
+  ansible.builtin.template:
+    src: pg_hba.j2
+    dest: /etc/postgresql/14/main/pg_hba.conf

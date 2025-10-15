@@ -1,0 +1,19 @@
+- name: Базовая настройка для всех серверов
+  hosts: all_hosts
+  roles:
+    - role: default_settings
+  tags:
+   - base_settings
+
+- name: Установка postgresql
+  hosts: postgresql
+  roles:
+   - role: install_postgresql
+  tags:
+   - postgresql
+- name: Настройка postgresql master
+  hosts: postgresql_master
+  roles:
+   - role: config_postgresql_master
+  tags:
+   - postgresql

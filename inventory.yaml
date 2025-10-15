@@ -1,0 +1,48 @@
+---
+linux:  # Группа хостов
+  children:  # Обозначение, что будет подгруппа хостов
+    all_hosts:
+      hosts:
+        nginx-balancer:
+          ansible_host: "{{ nginx_balancer_ip }}"
+        nginx-server-1:
+          ansible_host: "{{ nginx_server_1_ip }}"
+        nginx-server-2:
+          ansible_host: "{{ nginx_server_2_ip }}"
+    nginx-balancer:
+      hosts:
+        nginx-balancer:
+          ansible_host: "{{ nginx_balancer_ip }}"
+    nginx-server:
+      hosts:
+        nginx-balancer:
+          ansible_host: "{{ nginx_balancer_ip }}"
+        nginx-server-1:
+          ansible-host: "{{ nginx_server_1_ip }}"
+        nginx-server-2:
+          ansible_host: "{{ nginx_server_2_ip }}"
+    nginx_mediawiki:
+      hosts:
+        nginx-server-1:
+          ansible-host: "{{ nginx_server_1_ip }}"
+        nginx-server-2:
+          ansible-host: "{{ nginx_server_2_ip }}"
+    postgresql:
+      hosts:
+        postgresql_master:
+          ansible_host: "{{ postgresql_master_ip }}"
+    postgresql_master:
+      hosts:
+        postgresql_master:
+          ansible_host: "{{ postgresql_master_ip }}"
+
+  vars:  # Переменные, доступные или используемые для всех подгрупп
+    ansible_user: "ubuntu"
+    #ansible_password: "qwerty"
+    connection_protocol: ssh  # тип подключения
+    ansible_become: true  # Становиться ли другим пользователем после подключения
+    ansible_become_user: root
+    nginx_balancer_ip: 158.160.53.229
+    nginx_server_1_ip: 89.169.143.84
+    nginx_server_2_ip: 158.160.110.249
+    postgresql_master_ip: 158.160.54.13

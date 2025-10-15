@@ -1,0 +1,14 @@
+packages_to_install:
+  - dnsutils
+  - net-tools
+  - zabbix-agent
+  - rsync
+  - rsyslog
+  - mc
+  - curl
+  - wget
+  - apt-transport-https
+  - gnupg2
+  - software-properties-common
+  - ca-certificates
+  - parted

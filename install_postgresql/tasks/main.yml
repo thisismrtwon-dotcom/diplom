@@ -1,0 +1,5 @@
+- name: Установка Postgresql
+  apt:
+    update_cache: yes
+    name: "postgresql-14"
+    state: present
