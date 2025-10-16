@@ -1,0 +1,19 @@
+upstream app_servers {
+  {% for host in groups['nginx-mediawiki'] %}
+  server {{ hostvars[host]['ansible_local'] }}:80 weight=1;
+{% endfor %}
+}
+
+server {
+
+listen 80;
+
+server_name example.com;
+
+location / {
+
+proxy_pass http://app_servers;
+
+}
+
+}

@@ -1,0 +1,6 @@
+- name: delete playbook
+  roles:
+    - role: delete-nginx
+  hosts: nginx-server
+  tags:
+   - delete_nginx

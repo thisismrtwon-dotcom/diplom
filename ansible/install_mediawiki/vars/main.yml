@@ -1,0 +1,10 @@
+package_to_install:
+  - php
+  - php-intl
+  - php-mbstring
+  - php-xml
+  - php-apcu
+  - php-curl
+  - php-pgsql
+  - php-pear
+  - php8.1-fpm

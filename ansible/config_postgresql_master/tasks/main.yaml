@@ -9,11 +9,13 @@
   raw: |
     sudo -u postgres psql -c "CREATE USER wikiuser WITH PASSWORD 'qwerty';"
   become: yes
+  ignore_errors: yes
 
 - name: Выполнение команды через raw
   raw: |
     sudo -u postgres psql -c "CREATE DATABASE my_wiki OWNER wikiuser;"
   become: yes
+  ignore_errors: yes
 
 - name: Конфигурация postgresql.conf
   lineinfile:

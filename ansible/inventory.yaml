@@ -1,0 +1,67 @@
+---
+linux:  # Группа хостов
+  children:  # Обозначение, что будет подгруппа хостов
+    all_hosts:
+      hosts:
+        nginx-balancer:
+          ansible_host: "{{ nginx_balancer_ip.public }}"
+          ansible_local: "{{ nginx_balancer_ip.local }}"
+        nginx-server-1:
+          ansible_host: "{{ nginx_server_1_ip.public }}"
+          ansible_local: "{{ nginx_server_1_ip.local }}"
+        nginx-server-2:
+          ansible_host: "{{ nginx_server_2_ip.public }}"
+          ansible_local: "{{ nginx_server_1_ip.local }}"
+    nginx-balancer:
+      hosts:
+        nginx-balancer:
+          ansible_host: "{{ nginx_balancer_ip.public }}"
+          ansible_local: "{{ nginx_balancer_ip.local }}"
+    nginx-server:
+      hosts:
+        nginx-balancer:
+          ansible_host: "{{ nginx_balancer_ip.public }}"
+          ansible_local: "{{ nginx_balancer_ip.local }}"
+        nginx-server-1:
+          ansible_host: "{{ nginx_server_1_ip.public }}"
+          ansible_local: "{{ nginx_server_1_ip.local }}"
+        nginx-server-2:
+          ansible_host: "{{ nginx_server_2_ip.public }}"
+          ansible_local: "{{ nginx_server_2_ip.local }}"
+    nginx-mediawiki:
+      hosts:
+        nginx-server-1:
+          ansible_host: "{{ nginx_server_1_ip.public }}"
+          ansible_local: "{{ nginx_server_1_ip.local }}"
+        nginx-server-2:
+          ansible_host: "{{ nginx_server_2_ip.public }}"
+          ansible_local: "{{ nginx_server_2_ip.local }}"
+    postgresql:
+      hosts:
+        postgresql_master:
+          ansible_host: "{{ postgresql_master_ip.public }}"
+          ansible_local: "{{ postgresql_master_ip.local }}"
+    postgresql_master:
+      hosts:
+        postgresql_master:
+          ansible_host: "{{ postgresql_master_ip.public }}"
+          ansible_local: "{{ postgresql_master_ip.local }}"
+
+  vars:  # Переменные, доступные или используемые для всех подгрупп
+    ansible_user: "ubuntu"
+    #ansible_password: "qwerty"
+    connection_protocol: ssh  # тип подключения
+    ansible_become: true  # Становиться ли другим пользователем после подключения
+    ansible_become_user: root
+    nginx_balancer_ip:
+      public: 89.169.128.79
+      local: 192.168.10.34
+    nginx_server_1_ip:
+      public: 130.193.50.241
+      local: 192.168.10.9
+    nginx_server_2_ip:
+      public: 89.169.129.126
+      local: 192.168.10.32
+    postgresql_master_ip:
+      public: 158.160.110.218
+      local: 192.168.10.36

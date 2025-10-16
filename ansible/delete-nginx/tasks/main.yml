@@ -1,0 +1,2 @@
+- name: delete nginx
+  shell: "systemctl stop nginx && apt purge -y nginx && apt-get remove -y nginx && apt-get -y autoremove"

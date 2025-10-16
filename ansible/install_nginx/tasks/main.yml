@@ -1,0 +1,5 @@
+- name: Установка Nginx
+  apt:
+    update-cache: yes
+    name: "nginx"
+    state: present

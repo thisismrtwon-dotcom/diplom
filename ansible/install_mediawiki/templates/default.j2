@@ -1,0 +1,18 @@
+server {
+
+listen 80 default_server;
+
+listen [::]:80 default_server;
+
+index index.php;
+root /var/www/html;
+
+server_name _;
+
+location ~ \.php$ {
+
+   include snippets/fastcgi-php.conf;
+   fastcgi_pass unix:{{ php_fpm_socket.stdout }};
+   fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+ }
+}

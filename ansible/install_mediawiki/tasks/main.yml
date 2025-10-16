@@ -1,0 +1,28 @@
+- name: Установка php пакетов
+  apt:
+    update-cache: yes
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "{{ package_to_install }}"
+
+
+- name: Установка MediaWiki
+  shell: "rm -rf /var/www/html/* && wget -c https://releases.wikimedia.org/mediawiki/1.42/mediawiki-1.42.1.tar.gz -O - | sudo tar -xz -C . && cp -r mediawiki-1.42.1/* /var/www/html && rm -rf mediawiki-1.42.1/"
+
+- name: Получить путь к сокету PHP-FPM
+  shell: "grep '^listen =' /etc/php/8.1/fpm/pool.d/www.conf | sed 's/listen = //g'"
+  register: php_fpm_socket
+
+
+- name: Конфигурация nginx
+  ansible.builtin.template:
+    src: default.j2
+    dest: /etc/nginx/sites-enabled/default
+
+
+- name: Перезапуск Nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes

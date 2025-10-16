@@ -1,0 +1,42 @@
+- name: Базовая настройка для всех серверов
+  hosts: all_hosts
+  roles:
+    - role: default_settings
+  tags:
+   - base_settings
+
+- name: Установка postgresql
+  hosts: postgresql
+  roles:
+   - role: install_postgresql
+  tags:
+   - postgresql
+- name: Настройка postgresql master
+  hosts: postgresql_master
+  roles:
+   - role: config_postgresql_master
+  tags:
+   - postgresql
+
+- name: Установка Nginx
+  hosts: nginx-server
+  roles:
+    - role: install_nginx
+  tags:
+   - install_nginx
+   - install_mediawiki
+   - nginx_balancer
+
+- name: Установка Nginx-MediaWiki
+  hosts: nginx-mediawiki
+  roles:
+    - role: install_mediawiki
+  tags:
+   - install_mediawiki
+
+- name: Конфигурация nginx balancer
+  hosts: nginx-balancer
+  roles:
+    - role: config_nginx_balancer
+  tags:
+   - nginx_balancer
