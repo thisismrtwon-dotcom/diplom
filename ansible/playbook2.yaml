@@ -1,6 +1,13 @@
-- name: delete playbook
+- name: delete nginx
   roles:
     - role: delete-nginx
   hosts: nginx-server
   tags:
    - delete_nginx
+
+- name: delete postgresql
+  roles:
+    - role: delete_postgresql
+  hosts: postgresql_master
+  tags:
+   - delete_postgresql

@@ -12,6 +12,12 @@ linux:  # Группа хостов
         nginx-server-2:
           ansible_host: "{{ nginx_server_2_ip.public }}"
           ansible_local: "{{ nginx_server_1_ip.local }}"
+        backup_server_1:
+          ansible_host: "{{ backup_server_ip.public }}"
+          ansible_local: "{{ backup_server_ip.local }}"
+        postgresql_master:
+          ansible_host: "{{ postgresql_master_ip.public }}"
+          ansible_local: "{{ postgresql_master_ip.local }}"
     nginx-balancer:
       hosts:
         nginx-balancer:
@@ -41,11 +47,24 @@ linux:  # Группа хостов
         postgresql_master:
           ansible_host: "{{ postgresql_master_ip.public }}"
           ansible_local: "{{ postgresql_master_ip.local }}"
+        postgresql_replica:
+          ansible_host: "{{ postgresql_replica.public }}"
+          ansible_local: "{{ postgresql_replica.local }}"
     postgresql_master:
       hosts:
         postgresql_master:
           ansible_host: "{{ postgresql_master_ip.public }}"
           ansible_local: "{{ postgresql_master_ip.local }}"
+    postgresql_replica:
+      hosts:
+        postgresql_replica:
+          ansible_host: "{{ postgresql_replica.public }}"
+          ansible_local: "{{ postgresql_replica.local }}"
+    backup_server:
+      hosts:
+        backup_server_1:
+          ansible_host: "{{ backup_server_ip.public }}"
+          ansible_local: "{{ backup_server_ip.local }}"
 
   vars:  # Переменные, доступные или используемые для всех подгрупп
     ansible_user: "ubuntu"
@@ -57,11 +76,17 @@ linux:  # Группа хостов
       public: 89.169.128.79
       local: 192.168.10.34
     nginx_server_1_ip:
-      public: 130.193.50.241
+      public: 89.169.133.85
       local: 192.168.10.9
     nginx_server_2_ip:
-      public: 89.169.129.126
+      public: 158.160.55.213
       local: 192.168.10.32
     postgresql_master_ip:
-      public: 158.160.110.218
+      public: 158.160.38.118
       local: 192.168.10.36
+    backup_server_ip:
+      public: 158.160.39.253
+      local: 192.168.10.11
+    postgresql_replica:
+      public: 51.250.11.143
+      local: 192.168.10.13

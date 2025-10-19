@@ -11,6 +11,8 @@
    - role: install_postgresql
   tags:
    - postgresql
+   - postgresql_replica
+
 - name: Настройка postgresql master
   hosts: postgresql_master
   roles:
@@ -25,6 +27,7 @@
   tags:
    - install_nginx
    - install_mediawiki
+   - install_mediawiki_all
    - nginx_balancer
 
 - name: Установка Nginx-MediaWiki
@@ -33,6 +36,8 @@
     - role: install_mediawiki
   tags:
    - install_mediawiki
+   - install_mediawiki_all
+   - test
 
 - name: Конфигурация nginx balancer
   hosts: nginx-balancer
@@ -40,3 +45,19 @@
     - role: config_nginx_balancer
   tags:
    - nginx_balancer
+   - instal_mediawiki_all
+
+- name: Создание backup сервера
+  hosts: backup_server
+  roles:
+    - role: config_backup_server
+  tags:
+   - create_backup_server
+
+
+- name: Создание postgresql replica
+  hosts: postgresql_replica
+  roles:
+    - role: config_postgresql_replica
+  tags:
+   - postgresql_replica

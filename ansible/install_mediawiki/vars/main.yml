@@ -8,3 +8,12 @@ package_to_install:
   - php-pgsql
   - php-pear
   - php8.1-fpm
+
+postgresql_settings:
+  dbname: "my_wiki"
+  dbuser: "wikiuser"
+  dbpass: "qwerty"
+
+mediawiki_settings:
+  name: "diplom_wiki"
+  namespace: "diplom_wiki"

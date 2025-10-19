@@ -1,0 +1,8 @@
+- name: Создание папки backup с правами root
+  ansible.builtin.file:
+    path: /backup
+    state: directory
+    mode: '0700'           # права: rwxr-xr-x
+    owner: root
+    group: root
+    recurse: no

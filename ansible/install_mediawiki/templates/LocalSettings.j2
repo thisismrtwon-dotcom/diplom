@@ -1,0 +1,133 @@
+<?php
+
+{% set db_ip = hostvars['postgresql_master']['ansible_local'] %}
+{% set self_public_ip = hostvars[inventory_hostname]['ansible_host']  %}
+
+{% for host in groups['postgresql_master'] %}
+   {% set db_ip = hostvars[host]['ansible_local'] %}
+{% endfor %}
+
+
+
+# Protect against web entry
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit;
+}
+
+
+
+
+## Uncomment this to disable output compression
+# $wgDisableOutputCompression = true;
+
+$wgSitename = '{{ mediawiki_settings.name }}';
+$wgMetaNamespace = '{{ mediawiki_settings.namespace }}';
+
+
+$wgScriptPath = '';
+
+$wgServer = 'http://{{ self_public_ip }}';
+
+$wgResourceBasePath = $wgScriptPath;
+
+$wgLogos = [
+	'1x' => "$wgResourceBasePath/resources/assets/change-your-logo.svg",
+	'icon' => "$wgResourceBasePath/resources/assets/change-your-logo.svg",
+];
+
+$wgEnableEmail = true;
+$wgEnableUserEmail = true; # UPO
+
+$wgEmergencyContact = '';
+$wgPasswordSender = '';
+
+$wgEnotifUserTalk = false; # UPO
+$wgEnotifWatchlist = false; # UPO
+$wgEmailAuthentication = true;
+
+
+
+
+## Database settings
+$wgDBtype = 'postgres';
+$wgDBserver = '{{ db_ip }}';
+$wgDBname = '{{ postgresql_settings.dbname }}';
+$wgDBuser = '{{ postgresql_settings.dbuser }}';
+$wgDBpassword = '{{ postgresql_settings.dbpass }}';
+
+# Postgres specific settings
+$wgDBport = "5432";
+$wgDBssl = false;
+$wgDBmwschema = "mediawiki";
+
+# Shared database table
+# This has no effect unless $wgSharedDB is also set.
+$wgSharedTables[] = "actor";
+
+## Shared memory settings
+$wgMainCacheType = CACHE_ACCEL;
+$wgMemCachedServers = [];
+
+## To enable image uploads, make sure the 'images' directory
+## is writable, then set this to true:
+$wgEnableUploads = false;
+#$wgUseImageMagick = true;
+#$wgImageMagickConvertCommand = '/usr/bin/convert';
+
+# InstantCommons allows wiki to use images from https://commons.wikimedia.org
+$wgUseInstantCommons = false;
+
+# Periodically send a pingback to https://www.mediawiki.org/ with basic data
+# about this MediaWiki instance. The Wikimedia Foundation shares this data
+# with MediaWiki developers to help guide future development efforts.
+$wgPingback = true;
+
+# Site language code, should be one of the list in ./includes/languages/data/Names.php
+$wgLanguageCode = 'ru';
+
+# Time zone
+$wgLocaltimezone = 'UTC';
+
+## Set $wgCacheDirectory to a writable directory on the web server
+## to make your wiki go slightly faster. The directory should not
+## be publicly accessible from the web.
+#$wgCacheDirectory = "$IP/cache";
+
+$wgSecretKey = '74a9476c7ca5ae937217f1927f3a580e840b27234034fbeb56be5a8d34788d15';
+
+# Changing this will log out all existing sessions.
+$wgAuthenticationTokenVersion = '1';
+
+# Site upgrade key. Must be set to a string (default provided) to turn on the
+# web installer while LocalSettings.php is in place
+$wgUpgradeKey = '38c6950a369effb5';
+
+## For attaching licensing metadata to pages, and displaying an
+## appropriate copyright notice / icon. GNU Free Documentation
+## License and Creative Commons licenses are supported so far.
+$wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
+$wgRightsUrl = '';
+$wgRightsText = '';
+$wgRightsIcon = "";
+
+# Path to the GNU diff3 utility. Used for conflict resolution.
+$wgDiff3 = '/usr/bin/diff3';
+
+# The following permissions were set based on your choice in the installer
+$wgGroupPermissions['*']['edit'] = false;
+
+## Default skin: you can change the default skin. Use the internal symbolic
+## names, e.g. 'vector' or 'monobook':
+$wgDefaultSkin = 'monobook';
+
+# Enabled skins.
+# The following skins were automatically enabled:
+wfLoadSkin( 'MinervaNeue' );
+wfLoadSkin( 'MonoBook' );
+wfLoadSkin( 'Timeless' );
+wfLoadSkin( 'Vector' );
+
+
+# End of automatically generated settings.
+# Add more configuration options below.
+

@@ -1,0 +1,8 @@
+- name: остановка postgresql
+  shell: "systemctl stop postgresql"
+
+- name: удаление пакетов
+  shell: "apt-get --purge remove -y postgresql && apt-get autoremove postgresql"
+
+- name: удаление данных
+  shell: "rm -rf /etc/postgresql/ && rm -rf /var/lib/postgresql/ rm -rf /var/log/postgresql/"

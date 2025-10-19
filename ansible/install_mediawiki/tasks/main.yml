@@ -20,6 +20,10 @@
     src: default.j2
     dest: /etc/nginx/sites-enabled/default
 
+- name: Конфигурация LocalSettings.php
+  ansible.builtin.template:
+    src: LocalSettings.j2
+    dest: /var/www/html/LocalSettings.php
 
 - name: Перезапуск Nginx
   service:

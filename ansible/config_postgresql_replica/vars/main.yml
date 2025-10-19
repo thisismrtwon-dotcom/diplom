@@ -1,0 +1,3 @@
+postgresql_settings:
+  replica_user: "syncuser"
+  replica_password: "qwerty"

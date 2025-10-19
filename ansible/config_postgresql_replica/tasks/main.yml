@@ -1,0 +1,40 @@
+- name: Конфигурация postgresql.conf
+  ansible.builtin.blockinfile:
+    path: /etc/postgresql/14/main/postgresql.conf
+    block: |
+      hot_standby = on
+      listen_addresses = '*'
+
+- name: Остановка сервиса postgresql
+  ansible.builtin.service:
+    name: postgresql
+    state: stopped
+
+- name: Удаление старых файлов postgresql
+  raw: |
+    sudo -u postgres rm -rf /var/lib/postgresql/14/main/
+  become: yes
+
+- name: Создание .pgpass
+  ansible.builtin.file:
+    path: /var/lib/postgresql/.pgpass
+    state: touch
+    owner: postgres
+    group: postgres
+    mode: '0700'
+
+- name: Создание переменных
+  ansible.builtin.set_fact:
+    master_ip: "{{ hostvars['postgresql_master']['ansible_local'] }}"
+
+
+- name: Конфигурация .pgpass
+  ansible.builtin.lineinfile:
+    path: /var/lib/postgresql/.pgpass
+    line: "{{ master_ip }}:5432:*:{{ postgresql_settings.replica_user }}:{{ postgresql_settings.replica_password }}"
+
+
+- name: Создание реплики
+  raw: |
+    cd /var/lib/postgresql && sudo -u postgres -H env PGPASSFILE=/var/lib/postgresql/.pgpass && sudo -u postgres -H pg_basebackup -h {{ master_ip }} -D /var/lib/postgresql/14/main -U syncuser -P -v -R
+  become: yes
