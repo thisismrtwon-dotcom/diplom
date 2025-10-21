@@ -1,3 +1,8 @@
+- name: Остановка PostgreSQL сервера
+  ansible.builtin.systemd:
+    name: postgresql
+    state: stopped
+
 - name: Конфигурация postgresql.conf
   ansible.builtin.blockinfile:
     path: /etc/postgresql/14/main/postgresql.conf
@@ -23,10 +28,19 @@
     group: postgres
     mode: '0700'
 
+#- name: Создание переменных
+#  ansible.builtin.set_fact:
+#    master_ip: "{{ hostvars['postgresql-master']['ansible_local'] }}"
+
+#- name: Создание переменных
+#  ansible.builtin.set_fact:
+#    master_ip: "{{ ansible_local }}"
+#  vars:
+#    ansible_local: "{{ hostvars['postgresql-master']['ansible_local'] }}"
+
 - name: Создание переменных
   ansible.builtin.set_fact:
-    master_ip: "{{ hostvars['postgresql_master']['ansible_local'] }}"
-
+    master_ip: "{{ hostvars['postgresql-master']['ansible_local'] }}"
 
 - name: Конфигурация .pgpass
   ansible.builtin.lineinfile:
@@ -38,3 +52,9 @@
   raw: |
     cd /var/lib/postgresql && sudo -u postgres -H env PGPASSFILE=/var/lib/postgresql/.pgpass && sudo -u postgres -H pg_basebackup -h {{ master_ip }} -D /var/lib/postgresql/14/main -U syncuser -P -v -R
   become: yes
+
+
+- name: Старт Postgresql сервера
+  ansible.builtin.systemd:
+    name: postgresql
+    state: started

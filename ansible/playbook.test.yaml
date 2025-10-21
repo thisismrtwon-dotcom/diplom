@@ -1,0 +1,34 @@
+#- name: Настройка postgresql master
+#  hosts: postgresql-master
+#  roles:
+#   - role: config_postgresql_master#
+#
+#- name: Создание postgresql replica
+#  hosts: postgresql-replica
+#  roles:
+#   - role: config_postgresql_replica
+#  tasks:
+#    - name: Собрать факты с postgresql-master (для доступа к его переменным)
+#      ansible.builtin.setup:
+#        host: postgresql-master
+#      delegate_to: localhost
+#      run_once: true
+
+
+- name: Настройка postgresql master
+  hosts: postgresql-master
+  roles:
+   - role: config_postgresql_master
+
+- name: Создание postgresql replica
+  hosts: postgresql-replica
+  tasks:
+    - name: Собрать факты с мастера (для доступа к его переменным)
+      ansible.builtin.setup:
+        host: postgresql-master
+      delegate_to: localhost  # выполняется с управляющего узла
+      run_once: true
+
+    - name: Теперь можно использовать переменные мастера
+      ansible.builtin.debug:
+        var: hostvars'postgresql-master''ansible_local'

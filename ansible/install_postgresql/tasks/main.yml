@@ -3,3 +3,8 @@
     update_cache: yes
     name: "postgresql-14"
     state: present
+
+- name: Запуск Postgresql сервера
+  ansible.builtin.systemd:
+    name: postgresql
+    state: started

@@ -1,3 +1,4 @@
 postgresql_settings:
+  master_ip: "{{ hostvars['postgresql-master']['ansible_local'] }}"
   replica_user: "syncuser"
   replica_password: "qwerty"

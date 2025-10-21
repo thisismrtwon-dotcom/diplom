@@ -1,0 +1,16 @@
+{% for host in groups['postgresql-replica'] %}
+{{ hostvars[host]['ansible_local'] }}
+{% endfor %}
+
+{% for host in groups['postgresql-master'] %}
+{{ hostvars[host]['ansible_local'] }}
+{% endfor %}
+
+pryamo: {{ hostvars['postgresql-master']['ansible_local'] }}
+
+{% for host in groups['nginx-server'] %}
+{{ hostvars[host]['ansible_local'] }}
+{% endfor %}
+
+
+

@@ -1,0 +1,15 @@
+- name: Copy Jinja2 template to target host
+  ansible.builtin.template:
+    src: test.j2
+    dest: /root/test
+
+
+- name: Создать переменную динамически
+  ansible.builtin.set_fact:
+    master_ip: "{{ hostvars['postgresql-master']['ansible_local'] }}"
+
+- name: Создание реплики
+  raw: |
+    echo "result: {{ master_ip }}" > tester.txt
+  become: yes
+

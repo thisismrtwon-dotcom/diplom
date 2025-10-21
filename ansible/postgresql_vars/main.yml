@@ -1,0 +1,3 @@
+postgresql_master:
+  local_ip: "{{ hostvars['postgresql-master']['ansible_local'] }}"
+  public_ip: "{{ hostvars['postgresql-master']['ansible_host'] }}"

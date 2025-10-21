@@ -1,0 +1,24 @@
+- name: Создание переменных
+  ansible.builtin.set_fact:
+    backup_user: "{{ hostvars[inventory_hostname]['ansible_backup_user'] }}"
+    backup_password: "{{ hostvars[inventory_hostname]['ansible_backup_password'] }}"
+
+- name: Создание backup пользователя
+  raw: |
+    sudo useradd -m -d /home/{{ backup_user }} -s /bin/bash {{ backup_user }} && echo "{{ backup_user }}:{{ backup_password }}" | sudo chpasswd
+
+  become: yes
+
+- name: Конфигурация sshd_config
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match User {{ backup_user }}
+      PasswordAuthentication yes
+      Match all
+
+- name: Перезапуск SSH-сервера
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+    enabled: yes

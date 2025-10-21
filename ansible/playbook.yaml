@@ -12,13 +12,15 @@
   tags:
    - postgresql
    - postgresql_replica
+   - postgresql_full
 
 - name: Настройка postgresql master
-  hosts: postgresql_master
+  hosts: postgresql-master
   roles:
    - role: config_postgresql_master
   tags:
-   - postgresql
+   - postgresql_master
+   - postgresql_full
 
 - name: Установка Nginx
   hosts: nginx-server
@@ -56,8 +58,15 @@
 
 
 - name: Создание postgresql replica
-  hosts: postgresql_replica
+  hosts: postgresql-replica
   roles:
     - role: config_postgresql_replica
   tags:
-   - postgresql_replica
+    - test_x
+
+- name: Удаление postgresql везде
+  hosts: postgresql
+  roles:
+   - role: delete_postgresql
+  tags:
+   - delete_postgresql

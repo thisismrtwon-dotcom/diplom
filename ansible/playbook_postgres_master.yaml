@@ -1,0 +1,4 @@
+- name: Настройка postgresql master
+  hosts: postgresql-master
+  roles:
+   - role: config_postgresql_master

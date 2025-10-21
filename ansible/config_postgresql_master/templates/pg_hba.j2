@@ -13,7 +13,9 @@ host    all             all             ::1/128                 scram-sha-256
 local   replication     all                                     peer
 host    replication     all             127.0.0.1/32            scram-sha-256
 host    replication     all             ::1/128                 scram-sha-256
-
+{% for host in groups['postgresql-replica'] %}
+host    replication     {{ postgresql_settings.db_repl_user }}     {{ hostvars[host]['ansible_local'] }}/32   scram-sha-256
+{% endfor %}
 
 #host    all             all             10.0.0.0/8                      scram-sha-256
 
