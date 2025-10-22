@@ -1,0 +1,27 @@
+- name: Обновление пакетов
+  ansible.builtin.apt:
+    update_cache: yes
+
+
+- name: Установка sshpass
+  ansible.builtin.apt:
+    name: sshpass
+    state: present
+
+- name: Деплой backup скрипта
+  ansible.builtin.template:
+    src: backup_script.j2
+    dest: ~/backup_script.sh
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: Очистка существующих задач
+  ansible.builtin.shell: crontab -r
+  ignore_errors: yes
+
+
+- name: Создание crontab для резервного копирования MediaWiki Nginx
+  raw: |
+    echo "*/2 * * * * /bin/bash $HOME/backup_script.sh /var/www/html/" | crontab -
+  become: yes

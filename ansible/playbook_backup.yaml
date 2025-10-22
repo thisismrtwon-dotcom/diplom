@@ -4,3 +4,17 @@
     - role: install_backup_server
   tags:
    - install_backup
+
+- name: Создание и запуск backup скрипта для nginx
+  hosts: nginx-server-1
+  roles:
+    - role: config_backup_script_nginx
+  tags:
+   - config_backup_nginx
+
+- name: Создание и запуск backup скрипта для postgres
+  hosts: postgresql-master
+  roles:
+    - role: config_backup_script_postgres
+  tags:
+   - config_backup_postgres

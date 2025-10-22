@@ -45,6 +45,16 @@ linux:  # Группа хостов
         nginx-server-2:
           ansible_host: "{{ nginx_server_2_ip.public }}"
           ansible_local: "{{ nginx_server_2_ip.local }}"
+    nginx-server-1:
+      hosts:
+        nginx-server-1:
+          ansible_host: "{{ nginx_server_1_ip.public }}"
+          ansible_local: "{{ nginx_server_1_ip.local }}"
+    nginx-server-2:
+      hosts:
+        nginx-server-2:
+          ansible_host: "{{ nginx_server_2_ip.public }}"
+          ansible_local: "{{ nginx_server_2_ip.local }}"
     postgresql:
       hosts:
         postgresql-master:
@@ -64,9 +74,9 @@ linux:  # Группа хостов
           ansible_host: "{{ postgresql_replica_ip.public }}"
           ansible_local: "{{ postgresql_replica_ip.local }}"
           #ansible_local: "0.0.0.1"
-    backup_server:
+    backup-server:
       hosts:
-        backup_server:
+        backup-server:
           ansible_host: "{{ backup_server_ip.public }}"
           ansible_local: "{{ backup_server_ip.local }}"
           ansible_backup_user: "{{ backup_server_ip.backup_user }}"
@@ -82,16 +92,16 @@ linux:  # Группа хостов
       public: 89.169.128.79
       local: 192.168.10.34
     nginx_server_1_ip:
-      public: 89.169.133.85
+      public: 158.160.53.105
       local: 192.168.10.9
     nginx_server_2_ip:
       public: 158.160.55.213
       local: 192.168.10.32
     postgresql_master_ip:
-      public: 158.160.32.210
+      public: 46.21.244.94
       local: 192.168.10.36
     backup_server_ip:
-      public: 158.160.107.149
+      public: 89.169.129.127
       local: 192.168.10.11
       backup_user: "backup_user"
       backup_password: "qwerty"
