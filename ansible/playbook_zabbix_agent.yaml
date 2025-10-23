@@ -1,0 +1,5 @@
+- name: Настройка Zabbix-Agent
+  hosts: nginx-server-2
+  roles:
+    - role: default_settings
+    - role: config_zabbix_agent

@@ -95,14 +95,14 @@ linux:  # Группа хостов
       public: 158.160.53.105
       local: 192.168.10.9
     nginx_server_2_ip:
-      public: 158.160.55.213
-      local: 192.168.10.32
+      public: 89.169.132.48
+      local: 192.168.10.3
     postgresql_master_ip:
       public: 46.21.244.94
       local: 192.168.10.36
     backup_server_ip:
-      public: 89.169.129.127
-      local: 192.168.10.11
+      public: 158.160.100.220
+      local: 192.168.10.21
       backup_user: "backup_user"
       backup_password: "qwerty"
     postgresql_replica_ip:

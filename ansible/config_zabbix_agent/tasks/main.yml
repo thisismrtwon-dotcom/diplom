@@ -1,0 +1,27 @@
+- name: Установка Zabbix-Agent
+  apt:
+    update-cache: yes
+    name: "zabbix-agent"
+    state: present
+
+- name: Конфигурация Zabbix-Agent
+  ansible.builtin.template:
+    src: zabbix_agent_conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+
+- name: Настройка ufw
+  raw: |
+    ufw -f enable
+    ufw allow from {{ hostvars['backup-server']['ansible_local'] }} to any port 10050 proto tcp
+    ufw allow ssh
+    ufw reload
+  become: yes
+
+
+- name: Перезапуск Zabbix-Agent
+  ansible.builtin.service:
+    name: zabbix-agent
+    state: restarted
+    enabled: true
+
+
