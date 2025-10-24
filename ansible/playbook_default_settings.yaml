@@ -1,0 +1,6 @@
+- name: Базовая настройка для всех серверов
+  hosts: postgresql,nginx-server,backup-server
+  roles:
+    - role: default_settings
+  tags:
+   - base_settings

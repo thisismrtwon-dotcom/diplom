@@ -89,22 +89,22 @@ linux:  # Группа хостов
     ansible_become: true  # Становиться ли другим пользователем после подключения
     ansible_become_user: root
     nginx_balancer_ip:
-      public: 89.169.128.79
-      local: 192.168.10.34
-    nginx_server_1_ip:
-      public: 158.160.53.105
-      local: 192.168.10.9
-    nginx_server_2_ip:
-      public: 89.169.132.48
-      local: 192.168.10.3
-    postgresql_master_ip:
-      public: 46.21.244.94
-      local: 192.168.10.36
-    backup_server_ip:
-      public: 158.160.100.220
+      public: 158.160.98.36
       local: 192.168.10.21
+    nginx_server_1_ip:
+      public: 158.160.55.36
+      local: 192.168.10.7
+    nginx_server_2_ip:
+      public: 158.160.103.225
+      local: 192.168.10.22
+    postgresql_master_ip:
+      public: 158.160.112.117
+      local: 192.168.10.34
+    backup_server_ip:
+      public: 158.160.127.225
+      local: 192.168.10.27
       backup_user: "backup_user"
       backup_password: "qwerty"
     postgresql_replica_ip:
-      public: 51.250.11.143
-      local: 192.168.10.13
+      public: 158.160.127.103
+      local: 192.168.10.24

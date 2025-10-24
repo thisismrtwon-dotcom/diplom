@@ -1,0 +1,22 @@
+# базовая настройка для всех хостов   +++
+ansible-playbook playbook_default_settings.yaml -i inventory.yaml
+
+# установка postgresql на все хосты   +++
+ansible-playbook playbook_postgresql.yaml -i inventory.yaml
+
+# настройка конфигурации всех кластеров postgresql
+ansible-playbook playbook_postgresql_config.yaml -i inventory.yaml --tags="config_master" #  +++
+ansible-playbook playbook_postgresql_config.yaml -i inventory.yaml --tags="config_replica"
+
+# установка nginx и настройка балансировщика и MediaWiki  +++
+ansible-playbook playbook_nginx.yaml -i inventory.yaml --tags="full"
+ansible-playbook playbook_nginx.yaml -i inventory.yaml --tags="copy_local_settings"
+
+
+
+# установка и настройка zabbix_agent для mediawikki и postgresql +++
+ansible-playbook playbook_zabbix_agent.yaml -i inventory.yaml
+
+# настройка backup сервера и запуск скрипта на хостах
+# скрипт находится в templates/backup_script.sh
+ansible-playbook playbook_backup.yaml -i inventory.yaml

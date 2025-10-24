@@ -1,19 +1,19 @@
 - name: Создание и настройка backup сервера
-  hosts: backup_server
+  hosts: backup-server
   roles:
     - role: install_backup_server
   tags:
    - install_backup
 
 - name: Создание и запуск backup скрипта для nginx
-  hosts: nginx-server-1
+  hosts: nginx-mediawiki
   roles:
     - role: config_backup_script_nginx
   tags:
    - config_backup_nginx
 
 - name: Создание и запуск backup скрипта для postgres
-  hosts: postgresql-master
+  hosts: postgresql
   roles:
     - role: config_backup_script_postgres
   tags:

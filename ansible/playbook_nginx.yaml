@@ -1,0 +1,30 @@
+- name: Установка Nginx
+  hosts: nginx-server
+  roles:
+    - role: install_nginx
+  tags:
+   - install_nginx
+   - full
+
+- name: Установка Nginx-MediaWiki
+  hosts: nginx-mediawiki
+  roles:
+    - role: install_mediawiki
+  tags:
+   - install_mediawiki
+   - full
+
+- name: Конфигурация nginx balancer
+  hosts: nginx-balancer
+  roles:
+    - role: config_nginx_balancer
+  tags:
+   - nginx_balancer
+   - full
+
+- name: Копирование файлов
+  hosts: nginx-mediawiki
+  roles:
+   - role: copy_local_settings
+  tags:
+   - copy_local_settings

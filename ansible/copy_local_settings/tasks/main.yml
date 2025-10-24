@@ -1,0 +1,4 @@
+- name: Копирование LocalSettings.php
+  template:
+    src: LocalSettings.j2
+    dest: /var/www/html/LocalSettings.php

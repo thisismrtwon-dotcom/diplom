@@ -10,6 +10,11 @@
 - name: Установка MediaWiki
   shell: "rm -rf /var/www/html/* && wget -c https://releases.wikimedia.org/mediawiki/1.42/mediawiki-1.42.1.tar.gz -O - | sudo tar -xz -C . && cp -r mediawiki-1.42.1/* /var/www/html && rm -rf mediawiki-1.42.1/"
 
+- name: Копирования файла test_balance.php
+  ansible.builtin.template:
+    src: test_balance.j2
+    dest: /var/www/html/test_balance.php
+
 - name: Получить путь к сокету PHP-FPM
   shell: "grep '^listen =' /etc/php/8.1/fpm/pool.d/www.conf | sed 's/listen = //g'"
   register: php_fpm_socket
@@ -20,10 +25,6 @@
     src: default.j2
     dest: /etc/nginx/sites-enabled/default
 
-- name: Конфигурация LocalSettings.php
-  ansible.builtin.template:
-    src: LocalSettings.j2
-    dest: /var/www/html/LocalSettings.php
 
 - name: Перезапуск Nginx
   service:

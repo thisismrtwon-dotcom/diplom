@@ -1,0 +1,13 @@
+- name: Создание postgresql replica
+  hosts: postgresql-replica
+  roles:
+    - role: config_postgresql_replica
+  tags:
+   - config_replica
+
+- name: Настройка postgresql master
+  hosts: postgresql-master
+  roles:
+   - role: config_postgresql_master
+  tags:
+   - config_master
