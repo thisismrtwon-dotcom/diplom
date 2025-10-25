@@ -23,5 +23,5 @@
 
 - name: Создание crontab для резервного копирования MediaWiki Nginx
   raw: |
-    echo "*/2 * * * * /bin/bash $HOME/backup_script.sh /var/www/html/" | crontab -
+    echo "0 */2 * * * /bin/bash $HOME/backup_script.sh /var/www/html/" | crontab -
   become: yes
