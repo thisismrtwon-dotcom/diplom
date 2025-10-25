@@ -1,6 +1,14 @@
-- name: Установка postgresql на все кластеры
-  hosts: postgresql
+
+- name: Установка Postgresql Master Server
+  hosts: postgresql-master
   roles:
     - role: install_postgresql
   tags:
-   - install_postgresql_to_all_claster
+   - install_master
+
+- name: Установка Postgresql Replica Server
+  hosts: postgresql-replica
+  roles:
+    - role: install_postgresql
+  tags:
+   - install_replica

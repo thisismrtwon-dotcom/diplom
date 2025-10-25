@@ -1,7 +1,7 @@
 upstream app_servers {
-  {% for host in groups['nginx-mediawiki'] %}
-  server {{ hostvars[host]['ansible_local'] }}:80 weight=1;
-{% endfor %}
+  least_conn;
+  server {{ hostvars['nginx-server-1']['ansible_local'] }}:80 weight=1;
+  server {{ hostvars['nginx-server-2']['ansible_local'] }}:80 weight=1;
 }
 
 server {

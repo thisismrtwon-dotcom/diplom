@@ -1,0 +1,20 @@
+- name: Смена postgresql сервера с реплики на мастер
+  hosts: postgresql-replica
+  roles:
+    - role: up_replica_to_master
+  tags:
+   - config_replica
+
+- name: Смена конфигурации на MediaWiki серверах
+  hosts: nginx-server-1
+  roles:
+    - role: replace_config_replica
+  tags:
+   - config_nginx_server_1
+
+- name: Смена конфигурации на MediaWiki серверах
+  hosts: nginx-server-2
+  roles:
+    - role: replace_config_replica
+  tags:
+   - config_nginx_server_2

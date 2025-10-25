@@ -1,10 +1,28 @@
-- name: Установка Nginx
-  hosts: nginx-server
+- name: Установка Nginx на Server 1
+  hosts: nginx-server-1
   roles:
     - role: install_nginx
   tags:
    - install_nginx
    - full
+
+
+- name: Установка Nginx на Server 2
+  hosts: nginx-server-2
+  roles:
+    - role: install_nginx
+  tags:
+   - install_nginx
+   - full
+
+- name: Установка Nginx на Balancer
+  hosts: nginx-balancer
+  roles:
+    - role: install_nginx
+  tags:
+   - install_nginx
+   - full
+
 
 - name: Установка Nginx-MediaWiki
   hosts: nginx-mediawiki
@@ -21,6 +39,7 @@
   tags:
    - nginx_balancer
    - full
+   - abc
 
 - name: Копирование файлов
   hosts: nginx-mediawiki
@@ -28,3 +47,4 @@
    - role: copy_local_settings
   tags:
    - copy_local_settings
+

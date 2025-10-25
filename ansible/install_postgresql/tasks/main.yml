@@ -1,3 +1,26 @@
+
+#- name: Блок установки Postgresql
+#  block:
+#    - name: Установка Postgresql
+#      apt:
+#        update_cache: yes
+#        name: "postgresql-14"
+#        state: present
+#        ignore_errors: yes
+#  rescue:
+#    - name: Исправление ошибки при установке Postgresql
+#      raw: |
+#        rm -f /var/lib/dpkg/lock /var/lib/dpkg/lock-frontend /var/cache/apt/archives/lock
+#        sudo dpkg --configure -a
+#      become: yes
+#      ignore_errors: yes#
+#
+#    - name: Повторная попытка установки Postgresql
+#      apt:
+#        update_cache: yes
+#        name: "postgresql-14"
+#        state: present
+
 - name: Установка Postgresql
   apt:
     update_cache: yes
@@ -8,3 +31,11 @@
   ansible.builtin.systemd:
     name: postgresql
     state: started
+
+- name: Настройка ufw для postgresql
+  raw: |
+    ufw -f enable
+    ufw allow 5432
+    ufw allow ssh
+    ufw reload
+  become: yes

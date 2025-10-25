@@ -1,0 +1,30 @@
+
+#- name: Смена состояния реплики
+#  raw: |
+#    sudo -u postgres psql -c "SELECT pg_promote();"
+#  become: yes
+#  async: 6
+#  poll: 1
+
+
+- name: Смена состояния реплики
+  ansible.builtin.shell: |
+    sudo -u postgres psql -c "SELECT pg_promote();"
+  async: 6
+  poll: 1
+  register: result
+  become: yes
+  ignore_errors: yes
+
+
+- name: Конфигурация pg_hba.conf  для перехода на новый postgresql сервер
+  ansible.builtin.template:
+    src: pg_hba.j2
+    dest: /etc/postgresql/14/main/pg_hba.conf
+
+- name: Рестарт postgresql
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+    enabled: yes
+  become: yes

@@ -4,17 +4,35 @@
     - role: install_backup_server
   tags:
    - install_backup
+   - abc
 
-- name: Создание и запуск backup скрипта для nginx
-  hosts: nginx-mediawiki
+- name: Создание и запуск backup скрипта для nginx-server-1
+  hosts: nginx-server-1
   roles:
     - role: config_backup_script_nginx
   tags:
-   - config_backup_nginx
+   - config_nginx_server_1
 
-- name: Создание и запуск backup скрипта для postgres
-  hosts: postgresql
+- name: Создание и запуск backup скрипта для nginx-server-2
+  hosts: nginx-server-2
+  roles:
+    - role: config_backup_script_nginx
+  tags:
+   - config_nginx_server_2
+
+
+
+
+- name: Создание и запуск backup скрипта для postgres replica
+  hosts: postgresql-replica
   roles:
     - role: config_backup_script_postgres
   tags:
-   - config_backup_postgres
+   - config_backup_postgresql_replica
+
+- name: Создание и запуск backup скрипта для postgres master
+  hosts: postgresql-master
+  roles:
+    - role: config_backup_script_postgres
+  tags:
+   - config_backup_postgresql_master

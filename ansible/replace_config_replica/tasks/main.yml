@@ -1,0 +1,11 @@
+- name: Конфигурация LocalSettings.php для перехода на новый postgresql сервер
+  ansible.builtin.template:
+    src: LocalSettings.j2
+    dest: /var/www/html/LocalSettings.php
+
+- name: Рестарт MediaWiki Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+  become: yes

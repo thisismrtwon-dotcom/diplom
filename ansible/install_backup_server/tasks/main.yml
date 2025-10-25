@@ -6,8 +6,8 @@
 - name: Создание backup пользователя
   raw: |
     sudo useradd -m -d /home/{{ backup_user }} -s /bin/bash {{ backup_user }} && echo "{{ backup_user }}:{{ backup_password }}" | sudo chpasswd
-
   become: yes
+  ignore_errors: yes
 
 - name: Конфигурация sshd_config
   ansible.builtin.blockinfile:
@@ -17,8 +17,24 @@
       PasswordAuthentication yes
       Match all
 
+
+- name: Деплой скрипта для очистки backup файлов
+  ansible.builtin.template:
+    src: clean_backup.j2
+    dest: /home/backup_user/clean_backup.sh
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: Добавление в crontab скрипт для очистки backup файлов раз в неделю
+  raw: |
+    echo "@weekly /bin/bash $HOME/backup_script.sh /var/lib/postgresql/14/main/" | crontab -
+  become: yes
+
+
 - name: Перезапуск SSH-сервера
   ansible.builtin.service:
     name: sshd
     state: restarted
     enabled: yes
+

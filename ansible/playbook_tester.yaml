@@ -1,0 +1,4 @@
+- name: удаление postgresql
+  hosts: postgresql
+  roles:
+    - role: delete_postgresql

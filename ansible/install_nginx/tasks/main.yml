@@ -1,5 +1,16 @@
+
 - name: Установка Nginx
   apt:
     update_cache: yes
     name: "nginx"
     state: present
+
+
+- name: Настройка ufw для nginx
+  raw: |
+    ufw -f enable
+    ufw allow ssh
+    ufw allow http
+    ufw allow https
+    ufw reload
+  become: yes
