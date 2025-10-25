@@ -29,6 +29,7 @@ ansible-playbook playbook_backup.yaml -i inventory.yaml --tags="config_backup_po
 
 
 # АВАРИЙНАЯ СМЕНА СЕРВЕРА POSTGRESQL - С MASTER НА REPLICA#
-ansible-playbook playbook_up_replica_to_master.yaml -i inventory.yaml --tags="config_replica"
-ansible-playbook playbook_up_replica_to_master.yaml -i inventory.yaml --tags="config_nginx_server_1"
-ansible-playbook playbook_up_replica_to_master.yaml -i inventory.yaml --tags="config_nginx_server_2"
+
+#ansible-playbook playbook_up_replica_to_master.yaml -i inventory.yaml --tags="config_replica"
+#ansible-playbook playbook_up_replica_to_master.yaml -i inventory.yaml --tags="config_nginx_server_1"
+#ansible-playbook playbook_up_replica_to_master.yaml -i inventory.yaml --tags="config_nginx_server_2"
