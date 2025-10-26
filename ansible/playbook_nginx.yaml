@@ -38,8 +38,6 @@
     - role: config_nginx_balancer
   tags:
    - nginx_balancer
-   - full
-   - abc
 
 - name: Копирование файлов
   hosts: nginx-mediawiki

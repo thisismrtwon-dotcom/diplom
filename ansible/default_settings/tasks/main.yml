@@ -1,3 +1,10 @@
+
+- name: Stop unattended-upgrades service
+  ansible.builtin.service:
+    name: unattended-upgrades
+    state: stopped
+  become: true
+
 - name: Установка программ
   apt:
     update_cache: yes

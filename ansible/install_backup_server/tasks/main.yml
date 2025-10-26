@@ -31,6 +31,16 @@
     echo "@weekly /bin/bash $HOME/backup_script.sh /var/lib/postgresql/14/main/" | crontab -
   become: yes
 
+- name: Настройка ufw
+  raw: |
+    ufw -f enable
+    sudo ufw allow 10050/tcp
+    sudo ufw allow 10051/tcp
+    sudo ufw allow 80/tcp
+    sudo ufw allow ssh
+    sudo ufw reload
+  become: yes
+
 
 - name: Перезапуск SSH-сервера
   ansible.builtin.service:

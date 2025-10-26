@@ -10,6 +10,7 @@ ansible-playbook playbook_postgresql_config.yaml -i inventory.yaml --tags="confi
 
 # установка nginx и настройка балансировщика и MediaWiki  +++
 ansible-playbook playbook_nginx.yaml -i inventory.yaml --tags="full"
+ansible-playbook playbook_nginx.yaml -i inventory.yaml --tags="nginx_balancer"
 ansible-playbook playbook_nginx.yaml -i inventory.yaml --tags="copy_local_settings"
 
 
